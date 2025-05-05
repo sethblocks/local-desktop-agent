@@ -8,7 +8,7 @@ llm = ChatOllama(
     model="qwen3:4b",
     top_k=20,
     top_p=0.95,
-    temperature=0.6
+    temperature=0.4
     )
 print("Starting Agent ", llm.model)
 

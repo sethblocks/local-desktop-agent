@@ -4,3 +4,7 @@ gui
 /mario3dworld.jpg
 /problem.txt
 out.py
+tools/__pycache__/
+tools/__pycache__/fs.cpython-313.pyc
+tools/__pycache__/gnome.cpython-313.pyc
+tools/__pycache__/internet.cpython-313.pyc
