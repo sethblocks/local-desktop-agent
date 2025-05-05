@@ -5,7 +5,7 @@ from langchain_core.tools import tool
 from tools import fs, gnome, internet, linux #Custom Tools
 import time
 llm = ChatOllama(
-    model="qwen3:4b",
+    model="qwen3:8b",
     top_k=20,
     top_p=0.95,
     temperature=0.6

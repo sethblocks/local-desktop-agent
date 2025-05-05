@@ -14,7 +14,7 @@ def tilde(directory: str):
     return path
 @tool
 def find_file(name: str, path: str):
-    """finds files on the drive, not case sensitive, uses exact match. Path is the path to search, if unsure, use "~/" """
+    """finds files on the drive, not case sensitive, uses exact match. "./" is a good starting point especially with a generally search"""
     response = ""
     if path == "~":
         path = "~/"
@@ -27,7 +27,6 @@ def find_file(name: str, path: str):
                     if f.split("/")[-1].lower().find(word.lower()) != -1:
                         matching+=1
                 if matching > int(len(name.split(" "))/2):
-                    print(f)
                     if matching >= closest:
                         response = "\n" + (fd[0] + "/" + f) + response
                     else:
@@ -37,7 +36,7 @@ def find_file(name: str, path: str):
     return "Files Found:" + response
 @tool
 def ls(dir: str):
-    """Same functionality as the ls command, requires a full path or path using ~/"""
+    """Same functionality as the ls command, good for finding a file quickly but less thorough."""
     try:
         return "\n".join(os.listdir(tilde(dir)))
     except:
@@ -46,7 +45,7 @@ def ls(dir: str):
 
 @tool
 def write(file: str, text: str):
-    """Creates/Overwrites a file, writes the text raw, AS GIVEN, no modifications or operations are done to the text value."""
+    """Creates/Overwrites a file, overwrites with the given text."""
     try:
         open(tilde(file), "w").write(text)
         return "Written Succesfully to " + tilde(file)
