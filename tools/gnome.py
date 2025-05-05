@@ -5,7 +5,11 @@ from pathlib import Path
 
 def tilde(directory: str):
     """Converts ~/ to /home/user/"""
-    return directory.replace("~/", str(Path.home()) + "/")
+    path = directory.replace("~/", str(Path.home()) + "/")
+    if path.startswith("./"):
+        path = path.removeprefix(".")
+        path = os.getcwd() + path
+    return path
 # Gnome desktop Customization tools
 @tool
 def light_dark_theme(theme: str):
