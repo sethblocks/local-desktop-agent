@@ -7,7 +7,11 @@ import os
 
 def tilde(directory: str):
     """Converts ~/ to /home/user/"""
-    return directory.replace("~/", str(Path.home()) + "/")
+    path = directory.replace("~/", str(Path.home()) + "/")
+    if path.startswith("./"):
+        path = path.removeprefix(".")
+        path = os.getcwd() + path
+    return path
 @tool
 def find_file(name: str, path: str):
     """finds files on the drive, not case sensitive, uses exact match. Path is the path to search, if unsure, use "~/" """

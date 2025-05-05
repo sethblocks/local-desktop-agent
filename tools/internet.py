@@ -6,12 +6,15 @@ import cloudscraper
 from bs4 import BeautifulSoup
 from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, SystemMessage
+import os
 
-
-@tool
 def tilde(directory: str):
     """Converts ~/ to /home/user/"""
-    return directory.replace("~/", str(Path.home()) + "/")
+    path = directory.replace("~/", str(Path.home()) + "/")
+    if path.startswith("./"):
+        path = path.removeprefix(".")
+        path = os.getcwd() + path
+    return path
 
 @tool
 def image_search(query: str):
