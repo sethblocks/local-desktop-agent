@@ -1,6 +1,5 @@
 from langchain.agents import AgentExecutor, create_openai_tools_agent
 from langchain_ollama import ChatOllama
-from langchain_xai import ChatXAI
 from langchain.prompts import PromptTemplate, ChatPromptTemplate
 from langchain_core.tools import tool
 from tools import fs, gnome, internet #Custom Tools
