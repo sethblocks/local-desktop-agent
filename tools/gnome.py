@@ -17,7 +17,7 @@ def light_dark_theme(theme: str):
     res = subprocess.run(["gsettings", "set", "org.gnome.desktop.interface", "color-scheme", theme], capture_output=True, text=True)
     if res.stdout + "\n" + res.stderr == "\n":
         return "Success"
-    return res.stdout + "\n" + res.stderr
+    return str(res.stdout) + "\n" + str(res.stderr)
 
 @tool
 def accent_color(color: str):
@@ -25,14 +25,12 @@ def accent_color(color: str):
     res = subprocess.run(["gsettings", "set", "org.gnome.desktop.interface", "accent-color", color], capture_output=True, text=True)
     if res.stdout + "\n" + res.stderr == "\n":
         return "Success"
-    return res.stdout + "\n" + res.stderr
+    return str(res.stdout) + "\n" + str(res.stderr)
 @tool
 def wallpaper(file: str):
-    """Sets desktop wallpaper to a local image file. Requires a full path or a path starting with ~/"""
+    """Sets desktop wallpaper to a local image file."""
     res = subprocess.run(["gsettings", "set", "org.gnome.desktop.background", "picture-uri", "file://" + tilde(file)], capture_output=True, text=True)
     res = subprocess.run(["gsettings", "set", "org.gnome.desktop.background", "picture-uri-dark", "file://" + tilde(file)], capture_output=True, text=True)
     if res.stdout + "\n" + res.stderr == "\n":
         return "Success"
-    return res.stdout + "\n" + res.stderr
-if __name__ == "__main__":
-    pass#print(wallpaper("/home/seth/Pictures/Screenshots/Screenshot From 2025-04-24 20-52-25.png"))
+    return str(res.stdout) + "\n" + str(res.stderr)

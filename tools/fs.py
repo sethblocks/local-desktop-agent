@@ -15,15 +15,26 @@ def tilde(directory: str):
 @tool
 def find_file(name: str, path: str):
     """finds files on the drive, not case sensitive, uses exact match. Path is the path to search, if unsure, use "~/" """
-    response = "Found files:"
+    response = ""
     if path == "~":
         path = "~/"
+    closest = 0
     for fd in os.walk(tilde(path)):
         if fd[0].startswith(tilde("~/.")) != True: # Hidden files are hidden for a reason
             for f in fd[2]:
-                if f.split("/")[-1].lower().find(name.lower()) != -1:
-                    response += "\n" + (fd[0] + "/" + f)
-    return response
+                matching = 0
+                for word in name.split(" "):
+                    if f.split("/")[-1].lower().find(word.lower()) != -1:
+                        matching+=1
+                if matching > int(len(name.split(" "))/2):
+                    print(f)
+                    if matching >= closest:
+                        response = "\n" + (fd[0] + "/" + f) + response
+                    else:
+                        response +="\n" + (fd[0] + "/" + f)
+    
+
+    return "Files Found:" + response
 @tool
 def ls(dir: str):
     """Same functionality as the ls command, requires a full path or path using ~/"""

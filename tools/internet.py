@@ -31,25 +31,10 @@ def image_search(query: str):
     #except:
         return "Unable to access internet!"
 
-@tool
-def text_search(query: str):
-    """Searches the internet, you may need to try multiple queries to get complete details"""
-    return ""
-    try:
-        results = DDGS().text(query, max_results=5)
-        output = ""
-        i=0
-        for result in results:
-            i+=1
-            print(result)
-            output += "\nResult #" + str(i) + ":\nTitle:" + result['title'] + "\nText:" + result['body']
-        return output[2:]
-    except:
-        return "Unable to access internet!"
 
 @tool
-def better_text_search(query: str):
-    """Searches the internet"""
+def text_search(query: str):
+    """Searches the internet, good for information."""
     llm = ChatOllama(
         model="qwen3:4b",
         top_k=20,
@@ -123,6 +108,3 @@ def wget(url: str, output: str):
     if res.stdout + "\n" + res.stderr == "\n":
         return "Error, could not download"
     return res.stdout + "\n" + res.stderr
-
-if __name__ == "__main__":
-    print(better_text_search("Samsung S24 Specs"))
