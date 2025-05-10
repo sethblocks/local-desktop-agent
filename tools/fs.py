@@ -45,7 +45,7 @@ def ls(dir: str):
 
 @tool
 def write(file: str, text: str):
-    """Creates/Overwrites a file, overwrites with the given text."""
+    """Creates/Overwrites a file, overwrites with the given raw text."""
     try:
         open(tilde(file), "w").write(text)
         return "Written Succesfully to " + tilde(file)

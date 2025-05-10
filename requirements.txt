@@ -4,3 +4,4 @@ langchain-ollama
 beautifulsoup4
 duckduckgo-search
 cloudscraper
+langgraph

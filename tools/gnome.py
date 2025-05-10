@@ -6,8 +6,10 @@ from pathlib import Path
 def tilde(directory: str):
     """Converts ~/ to /home/user/"""
     path = directory.replace("~/", str(Path.home()) + "/")
-    if path.startswith("./"):
+    if path.startswith("./") or path.startswith("/") == False:
         path = path.removeprefix(".")
+        if path.startswith("/") == False:
+            path = "/" + path
         path = os.getcwd() + path
     return path
 # Gnome desktop Customization tools
@@ -29,6 +31,8 @@ def accent_color(color: str):
 @tool
 def wallpaper(file: str):
     """Sets desktop wallpaper to a local image file."""
+    if file.find("https://") != -1:
+        return "Failed! Wallpaper cannot be a url, must be a local file!"
     res = subprocess.run(["gsettings", "set", "org.gnome.desktop.background", "picture-uri", "file://" + tilde(file)], capture_output=True, text=True)
     res = subprocess.run(["gsettings", "set", "org.gnome.desktop.background", "picture-uri-dark", "file://" + tilde(file)], capture_output=True, text=True)
     if res.stdout + "\n" + res.stderr == "\n":
