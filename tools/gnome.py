@@ -10,7 +10,7 @@ def tilde(directory: str):
         path = path.removeprefix(".")
         if path.startswith("/") == False:
             path = "/" + path
-        path = os.getcwd() + path
+        path = (os.getcwd() + path).replace("//", "/")
     return path
 # Gnome desktop Customization tools
 @tool
@@ -30,9 +30,12 @@ def accent_color(color: str):
     return str(res.stdout) + "\n" + str(res.stderr)
 @tool
 def wallpaper(file: str):
-    """Sets desktop wallpaper to a local image file."""
+    """Sets desktop wallpaper to an image file."""
+
     if file.find("https://") != -1:
         return "Failed! Wallpaper cannot be a url, must be a local file!"
+    if os.path.exists(file) == False:
+        return "File does not exist, are you using the correct name?"
     res = subprocess.run(["gsettings", "set", "org.gnome.desktop.background", "picture-uri", "file://" + tilde(file)], capture_output=True, text=True)
     res = subprocess.run(["gsettings", "set", "org.gnome.desktop.background", "picture-uri-dark", "file://" + tilde(file)], capture_output=True, text=True)
     if res.stdout + "\n" + res.stderr == "\n":

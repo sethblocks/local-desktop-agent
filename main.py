@@ -2,7 +2,7 @@ from langchain.agents import AgentExecutor, create_openai_tools_agent
 from langchain_ollama import ChatOllama
 from langchain.prompts import PromptTemplate, ChatPromptTemplate
 from langchain_core.tools import tool
-from tools import fs, gnome, internet, linux #Custom Tools
+from tools import fs, gnome, internet, linux, roomba #Custom Tools
 
 #Langgraph (Experimental Ver)
 from langgraph.prebuilt import create_react_agent
@@ -13,12 +13,12 @@ llm = ChatOllama(
     model="qwen3:4b",
     top_k=20,
     top_p=0.95,
-    temperature=0.3
+    temperature=0.6
     )
 print("Starting Agent ", llm.model)
 
 prompt = ChatPromptTemplate.from_messages([
-    ("system", "Solve the given task or problem autonomously, no user input is allowed. Use problem solving when errors occur."),
+    ("system", "Solve the given task or problem autonomously, no user input or questions is allowed. Use problem solving when errors occur."),
     ("human", "{input}"),
     ("placeholder", "{agent_scratchpad}"),
 ])
@@ -36,7 +36,8 @@ tools = [
     internet.text_search,
     internet.wget,
     linux.terminal,
-    linux.open
+    linux.open,
+    roomba.drive
     ]
 # For whatever reason this is NOT recommended agent = create_openai_tools_agent(llm=llm, tools=tools, prompt=prompt)
 
